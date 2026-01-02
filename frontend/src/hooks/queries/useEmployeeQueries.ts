@@ -1,0 +1,30 @@
+// src/hooks/queries/useEmployeeQueries.ts
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { employeeApi } from "../../api/employee.api";
+import { queryKeys } from "../../lib/react-query";
+import type { CreateEmployeeData } from "../../types/employee.types";
+import toast from "react-hot-toast";
+
+export const useEmployees = (search?: string, options = {}) => {
+  return useQuery({
+    queryKey: queryKeys.employees.all(search),
+    queryFn: () => employeeApi.getAll(search),
+    ...options,
+  });
+};
+
+export const useCreateEmployee = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (data: CreateEmployeeData) => employeeApi.create(data),
+    retry: false,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["employees"] });
+      toast.success("Employee added successfully");
+    },
+    onError: (error: any) => {
+      toast.error(error.response?.data?.message || "Failed to add employee");
+    },
+  });
+};
