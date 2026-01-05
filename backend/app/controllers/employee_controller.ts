@@ -103,4 +103,29 @@ export default class EmployeeController {
       },
     })
   }
+
+  async destroy({ auth, params, response }: HttpContext) {
+    const owner = auth.user!
+    // console.log(typeof params.id, owner.fullName)
+    if (!owner.isOwner()) {
+      return response.forbidden({
+        message: 'Only company owners can delete employees',
+      })
+    }
+
+    const employees = await this.authService.getCompanyEmployees(owner.id)
+    const employee = employees.find((emp) => emp.id == Number(params.id))
+
+    if (!employee) {
+      return response.notFound({
+        message: 'Employee not found',
+      })
+    }
+
+    await this.authService.deleteEmployee(employee.id)
+
+    return response.ok({
+      message: 'Employee deleted successfully',
+    })
+  }
 }

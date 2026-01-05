@@ -25,7 +25,6 @@ router
     // Auth routes
     router.get('/auth/me', [AuthController, 'me'])
     router.post('/auth/logout', [AuthController, 'logout'])
-  
 
     // Employee management (Owner only, checked in controller)
     router
@@ -33,6 +32,7 @@ router
         router.post('/employees', [EmployeeController, 'store'])
         router.get('/employees', [EmployeeController, 'index'])
         router.get('/employees/:id', [EmployeeController, 'show'])
+        router.delete('/employees/:id', [EmployeeController, 'destroy'])
         router.get('/screenshots', [ScreenshotController, 'index'])
         router.get('/screenshots/stats', [ScreenshotController, 'stats'])
       })

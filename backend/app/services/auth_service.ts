@@ -121,4 +121,10 @@ export default class AuthService {
 
     return await query
   }
+
+
+  async deleteEmployee(employeeId: number) {
+    const employee = await User.query().where('id', employeeId).firstOrFail()
+    await employee.delete()
+  }
 }
