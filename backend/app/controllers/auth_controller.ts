@@ -48,7 +48,7 @@ export default class AuthController {
    */
   async login({ request, response, auth }: HttpContext) {
     const { email, password } = await request.validateUsing(loginValidator)
-    console.log('after validation')
+    // console.log('after validation')
     try {
       // console.log(email, password)
       // console.log('validation completed')

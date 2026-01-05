@@ -61,7 +61,7 @@ export const Pagination: React.FC<PaginationProps> = ({
 
   const visiblePages = getVisiblePages();
 
-  console.log(currentPage, totalPages);
+  // console.log(currentPage, totalPages);
 
   return (
     <div className="flex items-center justify-center gap-2 mt-6">

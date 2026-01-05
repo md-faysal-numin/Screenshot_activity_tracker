@@ -62,9 +62,9 @@ export default class AuthService {
    * Login user
    */
   async login(email: string, password: string) {
-    console.log(email, password)
+    // console.log(email, password)
     const user = await User.verifyCredentials(email, password)
-    console.log('thik ase')
+    // console.log('thik ase')
     // await user.load('company', (query) => {
     //   query.preload('plan')
     // })

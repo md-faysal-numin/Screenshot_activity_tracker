@@ -9,18 +9,19 @@ interface UseEmployeesParams {
   search?: string;
   currentPage?: number;
   perPage?: number;
-  // enabled?: boolean;
+  enabled?: boolean;
 }
 export const useEmployees = ({
   search,
   currentPage,
   perPage,
+  enabled,
 }: // options = {}
 UseEmployeesParams) => {
   return useQuery({
     queryKey: queryKeys.employees.all(search, currentPage, perPage),
     queryFn: () => employeeApi.getAll(search, currentPage, perPage),
-    // ...options,
+    enabled,
   });
 };
 

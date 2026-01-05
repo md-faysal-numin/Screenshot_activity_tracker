@@ -28,7 +28,7 @@ export const DashboardPage: React.FC = () => {
   const [groupBy, setGroupBy] = useState<"5min" | "10min" | "all">("5min");
 
   // Fetch employees (owner only)
-  const { data } = useEmployees({});
+  const { data } = useEmployees({ enabled: isOwner });
   const employees = data?.data || [];
 
   // Build filters
@@ -40,14 +40,10 @@ export const DashboardPage: React.FC = () => {
 
   // Fetch screenshots
   const { data: screenshots = [], isLoading: screenshotsLoading } =
-    useScreenshots(filters, {
-      enabled: isOwner,
-    });
+    useScreenshots(filters, isOwner);
 
   // Fetch stats
-  const { data: stats } = useScreenshotStats(selectedDate, {
-    enabled: isOwner,
-  });
+  const { data: stats } = useScreenshotStats(selectedDate, isOwner);
 
   const isGrouped = groupBy !== "all";
 

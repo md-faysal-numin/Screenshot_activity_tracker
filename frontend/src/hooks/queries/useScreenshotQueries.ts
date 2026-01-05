@@ -5,20 +5,22 @@ import { queryKeys } from "../../lib/react-query";
 import type { ScreenshotFilters } from "../../types/screenshot.types";
 import toast from "react-hot-toast";
 
-export const useScreenshots = (filters: ScreenshotFilters, options = {}) => {
+export const useScreenshots = (
+  filters: ScreenshotFilters,
+  enabled: boolean
+) => {
   return useQuery({
     queryKey: queryKeys.screenshots.all(filters),
     queryFn: () => screenshotApi.getAll(filters),
-    enabled: !!filters.date,
-    ...options,
+    enabled: !!filters.date && enabled,
   });
 };
 
-export const useScreenshotStats = (date?: string, options = {}) => {
+export const useScreenshotStats = (date?: string, enabled?: boolean) => {
   return useQuery({
     queryKey: queryKeys.screenshots.stats(date),
     queryFn: () => screenshotApi.getStats(date),
-    ...options,
+    enabled,
   });
 };
 
