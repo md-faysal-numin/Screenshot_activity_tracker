@@ -17,17 +17,14 @@ export const EmployeesPage: React.FC = () => {
   const perPage = 10;
   const debouncedSearch = useDebounce(searchTerm, 500);
 
-  const { data, isLoading } = useEmployees(
-    debouncedSearch,
+  const { data, isLoading } = useEmployees({
+    search: debouncedSearch,
     currentPage,
-    perPage
-  );
+    perPage,
+  });
   const employees = data?.data || [];
   const meta = data?.meta || null;
- 
 
-
-  
   return (
     <Layout>
       <div>
