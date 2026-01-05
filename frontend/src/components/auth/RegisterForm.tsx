@@ -38,7 +38,7 @@ export const RegisterForm: React.FC = () => {
       },
       {
         onError: (error) => {
-        // console.log(error, "asi form a");
+          // console.log(error, "asi form a");
           if (error.response?.status === 422) {
             const errors: FieldErrors = {};
 
@@ -64,7 +64,7 @@ export const RegisterForm: React.FC = () => {
   if (plansLoading) {
     return <div className="text-center py-4">Loading plans...</div>;
   }
-  console.log(fieldErrors);
+  // console.log(fieldErrors);
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">

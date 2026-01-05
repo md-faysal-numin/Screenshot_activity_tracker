@@ -59,7 +59,7 @@ export default class EmployeeController {
     const filters = request.qs()
 
     const employees = await this.authService.getCompanyEmployees(owner.id, filters)
-    console.log(employees)
+    // console.log(employees)
 
     // return response.ok({
     //   data: employees.map((emp) => ({

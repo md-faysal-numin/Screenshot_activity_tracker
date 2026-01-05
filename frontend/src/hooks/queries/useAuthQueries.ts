@@ -13,6 +13,7 @@ export const useLogin = () => {
 
   return useMutation({
     mutationFn: (credentials: LoginCredentials) => authApi.login(credentials),
+    retry: false,
     onSuccess: (data) => {
       // Save token
       // saveToken(data.token.token);
@@ -35,6 +36,7 @@ export const useRegister = () => {
 
   return useMutation({
     mutationFn: (data: RegisterData) => authApi.register(data),
+    retry: false,
     onSuccess: (data) => {
       // Save token
       // saveToken(data.token.token);
@@ -46,7 +48,6 @@ export const useRegister = () => {
       navigate("/dashboard");
     },
     onError: (error: any) => {
-     
       toast.error(error.response?.data?.message || "Registration failed");
     },
   });
