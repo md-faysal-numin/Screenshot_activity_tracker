@@ -3,6 +3,12 @@ import Company from '#models/company'
 import Plan from '#models/plan'
 import db from '@adonisjs/lucid/services/db'
 
+type EmployeeFilters = {
+  search: string
+  currentPage: number
+  perPage: number
+}
+
 export default class AuthService {
   /**
    * Register a new company with owner
@@ -103,9 +109,9 @@ export default class AuthService {
   /**
    * Get all employees for a company
    */
-  async getCompanyEmployees(ownerId: number, search?: string) {
+  async getCompanyEmployees(ownerId: number, filters: Partial<EmployeeFilters>) {
     const owner = await User.query().where('id', ownerId).where('role', 'owner').firstOrFail()
-
+    let { currentPage = 1, perPage = 10, search = '' } = filters
     if (!owner.companyId) {
       throw new Error('Owner does not have a company')
     }
@@ -118,10 +124,9 @@ export default class AuthService {
     if (search) {
       query.where('fullName', 'like', `%${search}%`)
     }
-
-    return await query
+    const employees = await query.paginate(currentPage, Math.min(perPage, 10))
+    return employees
   }
-
 
   async deleteEmployee(employeeId: number) {
     const employee = await User.query().where('id', employeeId).firstOrFail()

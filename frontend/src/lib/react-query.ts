@@ -21,7 +21,8 @@ export const queryKeys = {
     me: ["auth", "me"] as const,
   },
   employees: {
-    all: (search?: string) => ["employees", { search }] as const,
+    all: (search?: string, currentPage?: number, perPage?: number) =>
+      ["employees", { search, currentPage, perPage }] as const,
     detail: (id: number) => ["employees", id] as const,
   },
   screenshots: {

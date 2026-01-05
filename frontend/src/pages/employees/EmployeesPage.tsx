@@ -7,15 +7,27 @@ import { Button } from "../../components/common/Button";
 import { Input } from "../../components/common/Input";
 import { UserPlus, Search } from "lucide-react";
 import { useDebounce } from "../../hooks/useDebounce";
+import { PaginationInfo } from "../../components/common/PaginationInfo";
+import { Pagination } from "../../components/common/Pagination";
 
 export const EmployeesPage: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-
+  const [currentPage, setCurrentPage] = useState(1);
+  const perPage = 10;
   const debouncedSearch = useDebounce(searchTerm, 500);
 
-  const { data: employees = [], isLoading } = useEmployees(debouncedSearch);
+  const { data, isLoading } = useEmployees(
+    debouncedSearch,
+    currentPage,
+    perPage
+  );
+  const employees = data?.data || [];
+  const meta = data?.meta || null;
+ 
 
+
+  
   return (
     <Layout>
       <div>
@@ -47,7 +59,20 @@ export const EmployeesPage: React.FC = () => {
         </div>
 
         <EmployeeList employees={employees} isLoading={isLoading} />
-
+        {meta && meta.total > 0 && (
+          <>
+            <Pagination
+              currentPage={meta.currentPage}
+              totalPages={meta.lastPage}
+              onPageChange={setCurrentPage}
+            />
+            <PaginationInfo
+              currentPage={meta.currentPage}
+              perPage={meta.perPage}
+              total={meta.total}
+            />
+          </>
+        )}
         <AddEmployeeModal
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}

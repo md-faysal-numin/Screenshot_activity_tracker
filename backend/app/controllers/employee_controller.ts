@@ -56,19 +56,22 @@ export default class EmployeeController {
       })
     }
 
-    const { search } = request.qs()
+    const filters = request.qs()
 
-    const employees = await this.authService.getCompanyEmployees(owner.id, search)
+    const employees = await this.authService.getCompanyEmployees(owner.id, filters)
+    console.log(employees)
 
-    return response.ok({
-      data: employees.map((emp) => ({
-        id: emp.id,
-        fullName: emp.fullName,
-        email: emp.email,
-        role: emp.role,
-        createdAt: emp.createdAt,
-      })),
-    })
+    // return response.ok({
+    //   data: employees.map((emp) => ({
+    //     id: emp.id,
+    //     fullName: emp.fullName,
+    //     email: emp.email,
+    //     role: emp.role,
+    //     createdAt: emp.createdAt,
+    //   })),
+
+    // })
+    return response.ok(employees)
   }
 
   /**
@@ -84,7 +87,7 @@ export default class EmployeeController {
       })
     }
 
-    const employees = await this.authService.getCompanyEmployees(owner.id)
+    const employees = await this.authService.getCompanyEmployees(owner.id, {})
     const employee = employees.find((emp) => emp.id === params.id)
 
     if (!employee) {
@@ -113,7 +116,7 @@ export default class EmployeeController {
       })
     }
 
-    const employees = await this.authService.getCompanyEmployees(owner.id)
+    const employees = await this.authService.getCompanyEmployees(owner.id, {})
     const employee = employees.find((emp) => emp.id == Number(params.id))
 
     if (!employee) {

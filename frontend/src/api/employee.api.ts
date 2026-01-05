@@ -1,13 +1,17 @@
 import axios from "./axios.config";
 import type { Employee, CreateEmployeeData } from "../types/employee.types";
-import type { ApiResponse } from "../types/common.types";
+import type { ApiResponse, PaginatedResponse } from "../types/common.types";
 
 export const employeeApi = {
-  getAll: async (search?: string): Promise<Employee[]> => {
-    const { data } = await axios.get<ApiResponse<Employee[]>>("/employees", {
-      params: { search },
-    });
-    return data.data;
+  getAll: async (search?: string, currentPage?: number, perPage?: number) => {
+    const { data } = await axios.get<PaginatedResponse<Employee>>(
+      "/employees",
+      {
+        params: { search, currentPage, perPage },
+      }
+    );
+    // console.log(data);
+    return data;
   },
 
   create: async (employeeData: CreateEmployeeData): Promise<Employee> => {

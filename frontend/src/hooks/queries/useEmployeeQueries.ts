@@ -5,10 +5,15 @@ import { queryKeys } from "../../lib/react-query";
 import type { CreateEmployeeData } from "../../types/employee.types";
 import toast from "react-hot-toast";
 
-export const useEmployees = (search?: string, options = {}) => {
+export const useEmployees = (
+  search?: string,
+  currentPage?: number,
+  perPage?: number,
+  options = {}
+) => {
   return useQuery({
-    queryKey: queryKeys.employees.all(search),
-    queryFn: () => employeeApi.getAll(search),
+    queryKey: queryKeys.employees.all(search, currentPage, perPage),
+    queryFn: () => employeeApi.getAll(search, currentPage, perPage),
     ...options,
   });
 };

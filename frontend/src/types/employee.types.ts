@@ -5,6 +5,7 @@ export interface Employee {
   email: string;
   role: string;
   createdAt: string;
+  
 }
 
 export interface CreateEmployeeData {
