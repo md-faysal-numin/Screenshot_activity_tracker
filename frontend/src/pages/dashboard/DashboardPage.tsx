@@ -28,9 +28,10 @@ export const DashboardPage: React.FC = () => {
   const [groupBy, setGroupBy] = useState<"5min" | "10min" | "all">("5min");
 
   // Fetch employees (owner only)
-  const { data: employees = [] } = useEmployees(undefined, {
+  const { data } = useEmployees(undefined, undefined, undefined, {
     enabled: isOwner,
   });
+  const employees = data?.data || [];
 
   // Build filters
   const filters: IScreenshotFilters = {
