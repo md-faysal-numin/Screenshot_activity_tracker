@@ -2,6 +2,7 @@ import type { HttpContext } from '@adonisjs/core/http'
 import ScreenshotService from '#services/screenshot_service'
 import { uploadScreenshotValidator, getScreenshotsValidator } from '#validators/screenshot'
 import { DateTime } from 'luxon'
+import { time } from 'console'
 
 export default class ScreenshotController {
   private screenshotService = new ScreenshotService()
@@ -14,11 +15,13 @@ export default class ScreenshotController {
     try {
       const user = auth.user!
       // console.log('payload received')
+      // console.log(request.all())
       const payload = await request.validateUsing(uploadScreenshotValidator)
       // console.log('payload validated')
+      // console.log(payload.capturedAt)
 
       const capturedAt = payload.capturedAt ? DateTime.fromJSDate(payload.capturedAt) : undefined
-
+      // console.log(capturedAt)
       const screenshot = await this.screenshotService.uploadScreenshot(
         user.id,
         payload.screenshot,
@@ -58,7 +61,9 @@ export default class ScreenshotController {
         startDate: filters.startDate ? DateTime.fromJSDate(filters.startDate) : undefined,
         endDate: filters.endDate ? DateTime.fromJSDate(filters.endDate) : undefined,
         groupBy: filters.groupBy,
+        timezone: filters.timezone,
       }
+      // console.log(processedFilters)
 
       const screenshots = await this.screenshotService.getScreenshots(user.id, processedFilters)
 

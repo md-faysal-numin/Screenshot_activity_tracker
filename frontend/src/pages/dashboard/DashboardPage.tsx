@@ -11,7 +11,7 @@ import {
   useScreenshotStats,
 } from "../../hooks/queries/useScreenshotQueries";
 import { useEmployees } from "../../hooks/queries/useEmployeeQueries";
-import { getDateString } from "../../utils/formatters";
+import { getDateString, getUserTimezone } from "../../utils/formatters";
 import { Spinner } from "../../components/common/Spinner";
 import type {
   ScreenshotGroup,
@@ -36,6 +36,7 @@ export const DashboardPage: React.FC = () => {
     date: selectedDate,
     ...(selectedEmployeeId && { userId: parseInt(selectedEmployeeId) }),
     ...(groupBy !== "all" && { groupBy }),
+    timezone: getUserTimezone(),
   };
 
   // Fetch screenshots
@@ -46,6 +47,8 @@ export const DashboardPage: React.FC = () => {
   const { data: stats } = useScreenshotStats(selectedDate, isOwner);
 
   const isGrouped = groupBy !== "all";
+
+  // console.log(screenshots);
 
   return (
     <Layout>

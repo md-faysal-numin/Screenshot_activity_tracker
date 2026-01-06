@@ -1,4 +1,5 @@
 import vine from '@vinejs/vine'
+import { time } from 'console'
 
 export const uploadScreenshotValidator = vine.compile(
   vine.object({
@@ -38,5 +39,6 @@ export const getScreenshotsValidator = vine.compile(
       })
       .optional(),
     groupBy: vine.enum(['5min', '10min']).optional(),
+    timezone: vine.string().optional(),
   })
 )

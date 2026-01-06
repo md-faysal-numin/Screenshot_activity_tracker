@@ -23,6 +23,7 @@ export const authApi = {
       "/auth/register",
       registerData
     );
+    // console.log(data.data);
     return data.data;
   },
 

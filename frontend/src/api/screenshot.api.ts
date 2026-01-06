@@ -14,7 +14,6 @@ export const screenshotApi = {
     if (capturedAt) {
       formData.append("capturedAt", capturedAt);
     }
-
     const { data } = await axios.post<ApiResponse<Screenshot>>(
       "/screenshots/upload",
       formData,
@@ -24,17 +23,21 @@ export const screenshotApi = {
         },
       }
     );
+    // console.log("hi");
     return data.data;
   },
 
   getAll: async (
     filters: ScreenshotFilters
   ): Promise<Screenshot[] | ScreenshotGroup[]> => {
+    
     const { data } = await axios.get<
       ApiResponse<Screenshot[] | ScreenshotGroup[]>
     >("/screenshots", {
       params: filters,
     });
+
+    // console.log("hi", data.data);
     return data.data;
   },
 

@@ -46,7 +46,7 @@ export const UploadScreenshot: React.FC = () => {
 
     await uploadMutation.mutateAsync({
       file: selectedFile,
-      capturedAt: new Date(capturedAt).toISOString(),
+      capturedAt: capturedAt,
     });
 
     setSelectedFile(null);
@@ -109,7 +109,7 @@ export const UploadScreenshot: React.FC = () => {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Capture Time
+                Capture Time in UTC
               </label>
               <input
                 type="datetime-local"

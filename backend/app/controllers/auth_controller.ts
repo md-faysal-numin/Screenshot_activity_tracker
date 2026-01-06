@@ -13,24 +13,19 @@ export default class AuthController {
   async register({ request, response }: HttpContext) {
     const payload = await request.validateUsing(registerCompanyValidator)
     try {
-      // console.log(request.all())
-      // console.log('before validation')
-      // console.log('validation completed')
       const { owner, company } = await this.authService.registerCompany(payload)
 
       return response.created({
         message: 'Company registered successfully',
         data: {
-          owner: {
+          user: {
             id: owner.id,
             fullName: owner.fullName,
-            email: owner.email,
             role: owner.role,
-          },
-          company: {
-            id: company.id,
-            name: company.name,
-            plan: owner.company?.plan,
+            company: {
+              name: company.name,
+              plan: owner.company?.plan,
+            },
           },
         },
       })

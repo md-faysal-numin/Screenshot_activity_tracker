@@ -28,6 +28,7 @@ export interface ScreenshotFilters {
   startDate?: string;
   endDate?: string;
   groupBy?: "5min" | "10min" | "all";
+  timezone?: string;
 }
 
 export interface ScreenshotStats {

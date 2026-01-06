@@ -7,7 +7,6 @@ export interface User {
 }
 
 export interface Company {
-  id: number;
   name: string;
   plan: Plan;
 }
@@ -33,10 +32,6 @@ export interface RegisterData {
 
 export interface AuthResponse {
   user: User;
-  token: {
-    token: string;
-    type: string;
-  };
 }
 
 export interface ApiResponse<T = any> {
