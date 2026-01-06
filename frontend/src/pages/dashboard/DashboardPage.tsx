@@ -11,7 +11,7 @@ import {
   useScreenshotStats,
 } from "../../hooks/queries/useScreenshotQueries";
 import { useEmployees } from "../../hooks/queries/useEmployeeQueries";
-import { getDateString, getUserTimezone } from "../../utils/formatters";
+import { getDateString } from "../../utils/formatters";
 import { Spinner } from "../../components/common/Spinner";
 import type {
   ScreenshotGroup,
