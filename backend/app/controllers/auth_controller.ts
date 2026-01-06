@@ -1,10 +1,13 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import AuthService from '#services/auth_service'
 import { registerCompanyValidator, loginValidator } from '#validators/auth'
+import { inject } from '@adonisjs/core'
 // import User from '#models/user'
 
+@inject()
 export default class AuthController {
-  private authService = new AuthService()
+  // private authService = new AuthService()
+  constructor(private authService: AuthService) {}
 
   /**
    * Register a new company with owner

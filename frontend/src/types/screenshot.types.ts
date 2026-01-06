@@ -5,6 +5,7 @@ export interface Screenshot {
   filePath: string;
   capturedDate: string;
   capturedAt: string;
+  createdAt: string;
   user?: {
     id: number;
     fullName: string;
@@ -28,7 +29,7 @@ export interface ScreenshotFilters {
   startDate?: string;
   endDate?: string;
   groupBy?: "5min" | "10min" | "all";
-  timezone?: string;
+  // timezone?: string;
 }
 
 export interface ScreenshotStats {

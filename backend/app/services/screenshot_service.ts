@@ -89,7 +89,7 @@ export default class ScreenshotService {
       startDate?: DateTime
       endDate?: DateTime
       groupBy?: '5min' | '10min'
-      timezone?: string
+      // timezone?: string
     }
   ) {
     const requestUser = await User.findOrFail(requestUserId)
@@ -136,7 +136,7 @@ export default class ScreenshotService {
     query = query.limit(100)
     // Group by hour and intervals if requested
     if (filters.groupBy) {
-      return this.groupScreenshots(screenshots, filters.groupBy, filters.timezone)
+      return this.groupScreenshots(screenshots, filters.groupBy)
     }
 
     return screenshots
@@ -147,16 +147,16 @@ export default class ScreenshotService {
    */
   private groupScreenshots(
     screenshots: Screenshot[],
-    interval: '5min' | '10min',
-    timezone?: string
+    interval: '5min' | '10min'
+    // timezone?: string
   ): GroupedScreenshot[] {
     const intervalMinutes = interval === '5min' ? 5 : 10
     const grouped: Map<number, Map<number, Screenshot[]>> = new Map()
 
     screenshots.forEach((screenshot) => {
-      const localCapturedAt = screenshot.capturedAt.setZone(timezone || 'utc')
-      const hour = localCapturedAt.hour
-      const minute = localCapturedAt.minute
+      // const localCapturedAt = screenshot.capturedAt
+      const hour = screenshot.capturedAt.hour
+      const minute = screenshot.capturedAt.minute
       const intervalIndex = Math.floor(minute / intervalMinutes)
 
       if (!grouped.has(hour)) {

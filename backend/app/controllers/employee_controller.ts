@@ -1,10 +1,12 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import AuthService from '#services/auth_service'
 import { createEmployeeValidator } from '#validators/employee'
+import { inject } from '@adonisjs/core'
 
+@inject()
 export default class EmployeeController {
-  private authService = new AuthService()
-
+  // private authService = new AuthService()
+  constructor(private authService: AuthService) {}
   /**
    * Create a new employee (Owner only)
    * POST /api/employees

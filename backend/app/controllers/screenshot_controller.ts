@@ -2,11 +2,13 @@ import type { HttpContext } from '@adonisjs/core/http'
 import ScreenshotService from '#services/screenshot_service'
 import { uploadScreenshotValidator, getScreenshotsValidator } from '#validators/screenshot'
 import { DateTime } from 'luxon'
-import { time } from 'console'
+import { inject } from '@adonisjs/core'
+// import { time } from 'console'
 
+@inject()
 export default class ScreenshotController {
-  private screenshotService = new ScreenshotService()
-
+  // private screenshotService = new ScreenshotService()
+  constructor(private screenshotService: ScreenshotService) {}
   /**
    * Upload screenshot (Employee or Owner)
    * POST /api/screenshots/upload
@@ -61,7 +63,7 @@ export default class ScreenshotController {
         startDate: filters.startDate ? DateTime.fromJSDate(filters.startDate) : undefined,
         endDate: filters.endDate ? DateTime.fromJSDate(filters.endDate) : undefined,
         groupBy: filters.groupBy,
-        timezone: filters.timezone,
+        // timezone: filters.timezone,
       }
       // console.log(processedFilters)
 

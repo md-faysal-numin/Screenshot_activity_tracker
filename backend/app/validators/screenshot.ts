@@ -1,5 +1,5 @@
 import vine from '@vinejs/vine'
-import { time } from 'console'
+// import { time } from 'console'
 
 export const uploadScreenshotValidator = vine.compile(
   vine.object({

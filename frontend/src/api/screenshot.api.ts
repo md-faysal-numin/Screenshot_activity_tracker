@@ -7,6 +7,32 @@ import type {
 } from "../types/screenshot.types";
 import type { ApiResponse } from "../types/common.types";
 
+const convertToLocal = (utcTimestamp: string): string => {
+  // Remove timezone offset (+00:00) and parse as UTC
+  const cleanTimestamp = utcTimestamp.replace(/\+00:00$/, "Z");
+  return cleanTimestamp;
+};
+
+const normalizeScreenshot = (screenshot: Screenshot): Screenshot => {
+  return {
+    ...screenshot,
+    capturedAt: convertToLocal(screenshot.capturedAt),
+    createdAt: convertToLocal(screenshot.createdAt),
+  };
+};
+
+const normalizeGroupedScreenshots = (
+  groups: ScreenshotGroup[]
+): ScreenshotGroup[] => {
+  return groups.map((group) => ({
+    ...group,
+    intervals: group.intervals.map((interval) => ({
+      ...interval,
+      screenshots: interval.screenshots.map(normalizeScreenshot),
+    })),
+  }));
+};
+
 export const screenshotApi = {
   upload: async (file: File, capturedAt?: string): Promise<Screenshot> => {
     const formData = new FormData();
@@ -23,20 +49,31 @@ export const screenshotApi = {
         },
       }
     );
-    // console.log("hi");
+
     return data.data;
   },
 
   getAll: async (
     filters: ScreenshotFilters
   ): Promise<Screenshot[] | ScreenshotGroup[]> => {
-    
     const { data } = await axios.get<
       ApiResponse<Screenshot[] | ScreenshotGroup[]>
     >("/screenshots", {
       params: filters,
     });
 
+    console.log("hi 2");
+    if (Array.isArray(data.data) && data.data.length > 0) {
+      const firstItem = data.data[0];
+
+      // Check if it's grouped (has 'hour' property)
+      if ("hour" in firstItem) {
+        return normalizeGroupedScreenshots(data.data as ScreenshotGroup[]);
+      } else {
+        // Flat array of screenshots
+        return (data.data as Screenshot[]).map(normalizeScreenshot);
+      }
+    }
     // console.log("hi", data.data);
     return data.data;
   },
@@ -48,6 +85,7 @@ export const screenshotApi = {
         params: { date },
       }
     );
+
     return data.data;
   },
 };

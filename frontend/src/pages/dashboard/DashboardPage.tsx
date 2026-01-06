@@ -36,7 +36,7 @@ export const DashboardPage: React.FC = () => {
     date: selectedDate,
     ...(selectedEmployeeId && { userId: parseInt(selectedEmployeeId) }),
     ...(groupBy !== "all" && { groupBy }),
-    timezone: getUserTimezone(),
+    // timezone: getUserTimezone(),
   };
 
   // Fetch screenshots
